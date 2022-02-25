@@ -19,6 +19,6 @@ git commit -m 'deploy'
 
 
 # 部署到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:wenchunan/Vue-Week6.git master:gh-pages
+git push -f  https://github.com/wenchunan/Vue-Week6.git master:gh-pages
 
 cd -

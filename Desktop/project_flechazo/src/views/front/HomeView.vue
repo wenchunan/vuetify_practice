@@ -1,96 +1,265 @@
 <template>
-  <header class="header_background">
-    <div class="header d-flex align-items-center mb-5">
-      <div class="header_pic">
-        <img src="@/assets/pic/homePagePic.png"  class="img-fluid" alt="homePagePic">
-      </div>
-      <div class="header_describe">
-        <h4>我在想</h4>
-        <h3>你戴上會是什麼樣子</h3>
-        <ul class="pt-4">
-          <li class="h5 pb-2">不懼分秒追逐時光流逝</li>
-          <li class="h5 pb-2">從細節彰顯非凡氣度</li>
-          <li class="h5 pb-2">精心裝點璀璨生活</li>
-          <li class="h5 pb-2">每一天都能非比尋常</li>
-        </ul>
-
-      </div>
-    </div>
-    <div class="title_primary">
-      <h2 class="title_english">About us</h2>
-      <h2 class="title">關於品牌</h2>
-    </div>
-    <div class="about d-flex">
-        <div class="about_left container">
-          <h4>發光並非太陽的專利</h4>
-          <h3>你也可以</h3>
-          <ul class="pt-4 pb-4">
-            <li class="h5 pb-2">最浪漫的不是陪你到老</li>
-            <li class="h5 pb-2">而是助你悄悄變美  精緻到老</li>
-          </ul>
-          <p>我們的目標是打造一個女性化、永恆、優雅、現代與復古的飾品品牌，在平凡的生活中點綴一些不平凡，讓女孩們在每個舉手投足間，都是那最美的風景。</p>
+  <div class="wrap overflow-hidden">
+    <header class="header_background">
+      <div class="row flex-lg-row d-flex align-items-center gx-0">
+        <div class="header_pic col-12 col-lg">
+          <img src="@/assets/pic/homePagePic.png"  class="img-fluid" alt="homePagePic">
         </div>
-        <div class="about_right">
-          <div class="aboutPicBg">
-            <img src="@/assets/pic/AboutPic.png" width="60%" class="aboutPic" alt="關於品牌圖片" >
+        <div class="col-12 col-lg header_describe p-5">
+          <h4>我在想</h4>
+          <h3>你戴上會是什麼樣子</h3>
+          <ul class="pt-4">
+            <li class="h5 pb-2">不懼分秒追逐時光流逝</li>
+            <li class="h5 pb-2">從細節彰顯非凡氣度</li>
+            <li class="h5 pb-2">精心裝點璀璨生活</li>
+            <li class="h5 pb-2">每一天都能非比尋常</li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="title_primary">
+        <h2 class="title_english">About us</h2>
+        <h2 class="title">關於品牌</h2>
+      </div>
+      <div class="row flex-lg-row d-flex">
+          <div class="about_left container p-5 col-12 col-lg">
+            <h4>發光並非太陽的專利</h4>
+            <h3>你也可以</h3>
+            <span><em>最浪漫的不是陪你到老<br>
+            而是助你悄悄變美  精緻到老</em></span>
+            <p class="pt-5">我們的目標是打造一個女性化、永恆、優雅、現代與復古的飾品品牌，在平凡的生活中點綴一些不平凡，讓女孩們在每個舉手投足間，都是那最美的風景。</p>
+          </div>
+          <div class="about_right col-12 col-lg">
+            <div class="aboutPicBg position-relative">
+              <img src="@/assets/pic/AboutPic.png" class="aboutPic img-fluid position-absolute" alt="關於品牌圖片" width="500">
+            </div>
+          </div>
+      </div>
+    </header>
+    <section class="section_coupon">
+      <div class="bg_video">
+        <video class="bg_video_content" autoplay muted loop>
+          <source src="@/assets/video/coupon_video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="discount_title">
+        <div class="d-flex flex-column align-items-center justify-content-center">
+          <h2 class="title_english">Celebrate</h2>
+          <h3 class="h1 px-1 mb-4">歡慶周年</h3>
+          <p class="text-center text-md-start mb-5 mb-md-8 px-5">
+            即日起至 2022-05-31<br class="d-md-none">全館消費不限金額，即享
+            <strong class="fs-5">85%</strong>
+            折扣
+          </p>
+           <div class="discount_code">
+                <i class="bi bi-front"></i>
+                <input type="text" class="discount_code_input text-white text-center py-3" width="30%" readonly>
+           </div>
+      </div>
+      </div>
+    </section>
+    <section class="section_bg">
+      <section class="section_onSale">
+        <div class="title_primary">
+          <h2 class="title_english">On sale</h2>
+          <h2 class="title">特價商品</h2>
+        </div>
+        <div class="container d-flex pt-5 sale-container">
+          <swiper
+              :breakpoints="swiperOptions.breakpoints"
+              :modules="modules"
+              :pagination="{ clickable: true }"
+              :space-between="10"
+              loop
+              :autoplay="{ delay: 3000 }"
+            >
+              <swiper-slide v-for="item in products" :key="item.id">
+                <div class="sale-item">
+                  <a @click="routerPush(item.id)">
+                    <img :src="item.imageUrl" alt="{{item.title}}" class="products-img img-fluid">
+                  </a>
+                  <div class="d-flex align-items-center justify-content-between px-2">
+                    <div class="pt-2 w-100">
+                      <a @click="routerPush(item.id)" class="sale-item-name">
+                        <p class="fs-5 fw-normal mb-0">{{item.title}}</p>
+                      </a>
+                      <p><del>NT$ {{item.origin_price}} </del>
+                      <span class="ms-3">NT$ {{item.price}}</span>
+                      </p>
+                    </div>
+                    <i class="bi bi-heart flex-shrink-1 pe-1 pe-md-0 pe-lg-0"></i>
+                  </div>
+              </div>
+              </swiper-slide>
+          </swiper>
+        </div>
+      </section>
+      <section class="section_popular">
+        <div class="title_primary">
+          <h2 class="title_english">Popular</h2>
+          <h2 class="title">本周人氣</h2>
+        </div>
+        <div class="container mt-5 mb-md-0">
+            <div class="row row-cols-md-2 row-cols-lg-2 gx-2">
+              <div class="col-lg-6 col-md-12 col-12 pb-5">
+                <div class="popular_left d-lg-flex d-md-flex">
+                  <img src="@/assets/pic/popularPic1-1.png" alt="莫奈花園的琥珀鎖住了春天" class="img-fluid">
+                  <span class="popular_title d-block d-lg-none d-md-none text-center">莫奈花園的琥珀鎖住了春天</span>
+                  <div class="position-relative">
+                    <span class="popular_title popular_span h5 position-relative d-none d-lg-block d-md-block">莫奈花園的琥珀鎖住了春天</span>
+                    <img src="@/assets/pic/popularPic1-2.png" alt="莫奈花園的琥珀鎖住了春天" width="280" class="position-absolute top-100 start-0 translate-middle d-none d-lg-block d-md-block">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6  col-md-12 col-12 popular_right">
+                <div class="d-lg-flex d-md-flex">
+                    <img src="@/assets/pic/popularPic2-1.png" alt="你無處安放的優雅" class="img-fluid">
+                    <span class="popular_title d-block d-lg-none d-md-none text-center">你無處安放的優雅</span>
+                    <div class="position-relative">
+                      <span class="popular_title h5 position-relative popular_span d-none d-lg-block d-md-block">你無處安放的優雅</span>
+                      <img src="@/assets/pic/popularPic2-2.png" alt="你無處安放的優雅" width="280" class="position-absolute top-100 start-0 translate-middle d-none d-lg-block d-md-block">
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="go_shopping_span container">
+          <a href="#/products" class="shopping-btn h5">
+            來去逛逛
+          </a>
+        </div>
+      </section>
+      <section class="section-products">
+        <div class="title_primary">
+          <h2 class="title_english">Products</h2>
+          <h2 class="title">商品專區</h2>
+        </div>
+        <div class="container pt-5">
+          <div class="row row-cols-md-2 row-cols-lg-4 gx-0">
+            <div class="col">
+               <router-link to="/products?category=戒指" class="position-relative productItem">
+                  <div class="imgFilter">
+                    <img src="@/assets/pic/productsRing.png" class="rounded-3 img-fluid" width="350" alt="戒指專區">
+                  </div>
+                  <div class="productItem-text">
+                     <h4>戒指 Ring</h4>
+                  </div>
+               </router-link>
+            </div>
+            <div class="col">
+              <router-link to="/products?category=手鍊" class="mb-5 position-relative productItem">
+                <div class="imgFilter">
+                    <img src="@/assets/pic/productsBracelet.png" class="rounded-3 img-fluid" width="350" alt="手鍊專區">
+                  </div>
+                  <div class="productItem-text">
+                     <h4>手鍊 Bracelet</h4>
+                  </div>
+              </router-link>
+            </div>
+            <div class="col">
+              <router-link to="/products?category=項鍊" class="position-relative productItem">
+                  <div class="imgFilter">
+                    <img src="@/assets/pic/productsNecklace.png" class="rounded-3 img-fluid" width="350" alt="項鍊專區">
+                  </div>
+                  <div class="productItem-text">
+                     <h4>項鍊 Necklace</h4>
+                  </div>
+              </router-link>
+            </div>
+            <div class="col">
+              <router-link to="/products?category=耳環" class="mb-5 position-relative productItem">
+                <div class="imgFilter">
+                    <img src="@/assets/pic/productsEarrings.png" class="rounded-3 img-fluid" width="350" alt="耳環專區">
+                  </div>
+                  <div class="productItem-text">
+                     <h4>耳環 Earrings</h4>
+                  </div>
+              </router-link>
+            </div>
           </div>
         </div>
-    </div>
-  </header>
-  <section class="section_coupon">
-    <div class="bg_video">
-      <video class="bg_video_content" autoplay muted loop>
-        <source src="@/assets/vedio/coupon_video.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="discount_title">
-      <h2 class="title_english">Celebrate</h2>
-      <h2 class="title pb-5">歡慶周年</h2>
-      <h5 class="pb-5">即日起至 2022-05-31， 全館消費不限金額，即享 <span class="h3">85%</span> 折扣</h5>
-      <div class="dicount_code">
-        <i class="bi bi-front"></i>
-        <input type="text" class="dicount_code_input text-white text-center py-3" width="30%" readonly>
-      </div>
-    </div>
-  </section>
+      </section>
+    </section>
+  </div>
+  <FrontFooter></FrontFooter>
 </template>
+<script>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import { Navigation, Pagination, Autoplay } from 'swiper'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import FrontFooter from '@/components/FrontFooter.vue'
+import localStorageFavorite from '@/libs/localStorageFavorite'
 
-<style>
+export default {
+  data () {
+    return {
+      products: [],
+      modules: [Navigation, Pagination, Autoplay],
+      swiperOptions: {
+        breakpoints: {
+          1: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          },
+          576: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 10
+          },
+          992: {
+            slidesPerView: 4,
+            spaceBetween: 20
+          }
+        }
+      }
+    }
+  },
+  components: {
+    Swiper, SwiperSlide, FrontFooter
+  },
+  mixins: [localStorageFavorite],
+  methods: {
+    getProducts () {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`
+      this.$http.get(url).then((res) => {
+        this.products = res.data.products
+      })
+    },
+    routerPush (id) {
+      this.$router.push(`/product/${id}`)
+    }
+  },
+  mounted () {
+    this.getProducts()
+  }
+}
+</script>
+<style lang="scss">
 .header_background {
   min-width: 100%;
   background-image: url('@/assets/pic/homePage-background.png');
   background-size: cover;
 }
-.header {
-  padding-bottom: 80px;
-}
 .header_describe {
-  width: 55%;
   height: 20%;
   background-color: rgba(183,164,139,0.4);
-  padding: 64px 36px 76px 142px;
-  position: relative;
-  left: -5%;
-  top: 8%
 }
 
-.about_left {
-  min-width: 40%;
-  padding: 140px
-}
 .about_right {
-  min-width: 60%;
-  padding: 80px 0px 80px 80px;
+  padding-bottom: 120px;
 }
 .aboutPicBg {
-  position: relative;
   height: 350px;
   background-color: #B7A48B;
 }
 .aboutPic {
-  position: absolute;
-  left: 10%;
-  top: 20%
+  top: 10%;
+  left: -5%;
 }
 .title_english{
   color: rgba(255, 255, 255, 0.15);
@@ -100,6 +269,8 @@
 }
 .title_primary{
   position: relative;
+  padding-top: 70px;
+  padding-bottom: 40px;
 }
 .title_primary .title {
   padding-left: 140px;
@@ -108,7 +279,7 @@
   content: '';
   display: block;
   position: absolute;
-  top: 80px;
+  bottom: 28px;
   left: 0;
   min-width: 320px;
   height: 1px;
@@ -116,7 +287,6 @@
 }
 .section_coupon {
   position: relative;
-  /* height: 470px; */
 }
 .bg_video {
   position: absolute;
@@ -125,7 +295,6 @@
   height: 100%;
   min-width: 100%;
   z-index: -1;
-  /* opacity: .15; */
   overflow: hidden;
 }
 .bg_video_content {
@@ -134,25 +303,128 @@
   object-fit: cover;
 }
 .discount_title {
-  text-align: center;
+  padding: 160px 0px 160px 0px;
   background-color: rgba(0, 0, 0, 0.65);
-  padding: 150px;
 }
 
-.dicount_code_input {
+.discount_code_input {
   cursor: pointer;
   border: 0;
   outline: none;
   background-color: #E0C8AB;
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: 5px 5px 6px #3c3c3c;
 }
 
-.bi {
+.bi.bi-front {
   position: relative;
   top: -35px;
-  left: 200px;
+  left: 207px;
   color: #E0C8AB;
   font-size: 20px;
+}
+
+.section_bg {
+  background-color: #755B44;
+}
+
+.section_onSale {
+  padding-bottom: 80px;
+}
+.products-img {
+  height: 350px;
+  width: 298px;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.swiper {
+  padding: 36px;
+}
+.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -3px;
+}
+
+.bi.bi-heart {
+  position: relative;
+  color: #ffff;
+  font-size: 28px;
+}
+
+.popular_right {
+  padding-top: 200px;
+}
+@media(max-width:767px) {
+  .popular_right {
+    padding-top: 20px;
+ }
+}
+.popular_span {
+  top: 35%;
+  right: 28%;
+}
+
+.popular_title {
+  background-color: #CCB69A;
+  padding: 18px;
+  max-width: 397px;
+}
+.shopping-btn {
+    position: relative;
+    padding: 18px 22px;
+    letter-spacing: 4px;
+    z-index: 5;
+    transition: all .3s cubic-bezier(.68,-.55,.265,1.55);
+}
+.shopping-btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background:#CCB69A;
+    width: 56px;
+    height: 56px;
+    z-index: -5;
+    transition: all .5s cubic-bezier(.68,-.55,.265,1.55)
+}
+
+.shopping-btn:hover:before {
+    width: 100%;
+    background: #CCB69A;
+}
+.go_shopping_span {
+  margin-top: 170px;
+  padding: 50px;
+}
+@media(max-width:767px) {
+  .go_shopping_span {
+    margin-top: 10px;
+ }
+}
+.productItem-text {
+    position: relative;
+    bottom: 50%;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.5s;
+    backface-visibility: hidden
+}
+.productItem:hover .productItem-text {
+    opacity: 1;
+    transform: translate(0,-30%)
+}
+.imgFilter img{
+  transition-duration: 0.5s;
+}
+.imgFilter img:hover {
+    filter: brightness(0.5);
+    width: 110%;
+}
+.section-products {
+  padding-bottom: 120px;
 }
 </style>

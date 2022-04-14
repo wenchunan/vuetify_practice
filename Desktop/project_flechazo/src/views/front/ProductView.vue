@@ -1,4 +1,7 @@
 <template>
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
 <div class="bg-color">
     <div class="container py-5 overflow-hidden">
         <div class="row align-items-center pt-5">
@@ -20,8 +23,10 @@
                 <p class="pb-4">{{ product.description }}</p>
                 <p class="mb-0 text-light"><del>NT$ {{ product.origin_price }}</del></p>
                 <p class="h4 fw-bold text-light pb-3">NT$ {{ product.price }}</p>
-                <form class="d-flex mt-4">
-                  <input type="number" class="from-control w-100" min="1">
+                <div class="d-flex mt-4">
+                   <select class="form-select bg-light text-dark rounded w-33 me-2" v-model.number="qty">
+                      <option v-for="num in 20" :key="`${num}-${product.id}`">{{ num }}</option>
+                    </select>
                   <div class="btn-group btn-group-sm w-100">
                     <button
                         type="button"
@@ -33,12 +38,13 @@
                     <button
                         type="button"
                         class="btn btn-color py-2 me-1"
-                        @click="toggleFavorite(product.id)"
+                        :class="favoriteId.includes(product.id) ? 'btn-primary': 'btn-outline-primary'"
+                        @click="toggleFavorite(product)"
                     >
-                    加入願望清單
+                    {{favoriteId.includes(product.id) ? '取消':'加入'}}願望清單
                     </button>
                 </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="pb-5 pt-5">
@@ -80,34 +86,39 @@
 <script>
 import emitter from '@/utils/emitter'
 import FrontFooter from '@/components/FrontFooter.vue'
+import localStorageFavorite from '@/libs/localStorageFavorite'
 export default {
   data () {
     return {
       product: [],
-      id: ''
+      id: '',
+      qty: 1,
+      isLoading: false
     }
   },
   components: {
     FrontFooter
   },
+  mixins: [localStorageFavorite],
   methods: {
     getProduct () {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.id}`
       this.$http.get(url).then((res) => {
-        console.log(res.data.product)
         this.product = res.data.product
+        this.isLoading = false
       })
     },
-    addToCart (qty) {
+    addToCart (id) {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
       const data = {
-        product_id: this.id,
-        qty: 1
+        product_id: id,
+        qty: this.qty
       }
       this.$http.post(url, { data }).then((res) => {
-        console.log(res.data)
         emitter.emit('get-cart')
-        alert(res.data.message)
+        this.$statusMsg(res, '加入', '已成功加入購物車')
+        this.qty = 1
       })
     }
   },

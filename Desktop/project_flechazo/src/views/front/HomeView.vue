@@ -1,4 +1,7 @@
 <template>
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
   <div class="wrap overflow-hidden">
     <header class="header_background">
       <div class="row flex-lg-row d-flex align-items-center gx-0">
@@ -46,14 +49,14 @@
         <div class="d-flex flex-column align-items-center justify-content-center">
           <h2 class="title_english">Celebrate</h2>
           <h3 class="h1 px-1 mb-4">歡慶周年</h3>
-          <p class="text-center text-md-start mb-5 mb-md-8 px-5">
+          <p class="text-center text-md-start mb-5 mb-md-5 px-5">
             即日起至 2022-05-31<br class="d-md-none">全館消費不限金額，即享
             <strong class="fs-5">85%</strong>
             折扣
           </p>
            <div class="discount_code">
-                <i class="bi bi-front"></i>
-                <input type="text" class="discount_code_input text-white text-center py-3" width="30%" readonly>
+              <p ref="couponCode" class="position-absolute copyCoupon" :class="{'d-none':isCopied}" style="color: transparent">new85</p>
+                <div class="btn btn-secondary text-center fs-small fs-md-5 text-white fw-bold px-4 py-2" @click.once="copyCouponCode">馬上領取</div>
            </div>
       </div>
       </div>
@@ -73,7 +76,7 @@
               loop
               :autoplay="{ delay: 3000 }"
             >
-              <swiper-slide v-for="item in products" :key="item.id">
+              <swiper-slide v-for="item in saleProducts" :key="item.id">
                 <div class="sale-item">
                   <a @click="routerPush(item.id)">
                     <img :src="item.imageUrl" alt="{{item.title}}" class="products-img img-fluid">
@@ -87,7 +90,10 @@
                       <span class="ms-3">NT$ {{item.price}}</span>
                       </p>
                     </div>
-                    <i class="bi bi-heart flex-shrink-1 pe-1 pe-md-0 pe-lg-0"></i>
+                    <a @click="toggleFavorite(item)">
+                      <i v-if="favoriteId.includes(item.id)" class="bi bi-heart-fill flex-shrink-1 pe-1 pe-md-0 pe-lg-0 fs-4"></i>
+                      <i v-else class="bi bi-heart fs-4 flex-shrink-1 pe-1 pe-md-0 pe-lg-0"></i>
+                    </a>
                   </div>
               </div>
               </swiper-slide>
@@ -135,46 +141,46 @@
           <h2 class="title">商品專區</h2>
         </div>
         <div class="container pt-5">
-          <div class="row row-cols-md-2 row-cols-lg-4 gx-0">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 gx-0 text-center">
             <div class="col">
-               <router-link to="/products?category=戒指" class="position-relative productItem">
+               <a href="" @click.prevent="goToCategory('戒指')" class="position-relative productItem">
                   <div class="imgFilter">
                     <img src="@/assets/pic/productsRing.png" class="rounded-3 img-fluid" width="350" alt="戒指專區">
                   </div>
                   <div class="productItem-text">
                      <h4>戒指 Ring</h4>
                   </div>
-               </router-link>
+               </a>
             </div>
             <div class="col">
-              <router-link to="/products?category=手鍊" class="mb-5 position-relative productItem">
+              <a href="" @click.prevent="goToCategory('手鍊')"  class="mb-5 position-relative productItem">
                 <div class="imgFilter">
                     <img src="@/assets/pic/productsBracelet.png" class="rounded-3 img-fluid" width="350" alt="手鍊專區">
                   </div>
                   <div class="productItem-text">
                      <h4>手鍊 Bracelet</h4>
                   </div>
-              </router-link>
+              </a>
             </div>
             <div class="col">
-              <router-link to="/products?category=項鍊" class="position-relative productItem">
+              <a href="" @click.prevent="goToCategory('項鍊')" class="position-relative productItem">
                   <div class="imgFilter">
                     <img src="@/assets/pic/productsNecklace.png" class="rounded-3 img-fluid" width="350" alt="項鍊專區">
                   </div>
                   <div class="productItem-text">
                      <h4>項鍊 Necklace</h4>
                   </div>
-              </router-link>
+              </a>
             </div>
             <div class="col">
-              <router-link to="/products?category=耳環" class="mb-5 position-relative productItem">
+              <a href="" @click.prevent="goToCategory('耳環')" class="mb-5 position-relative productItem">
                 <div class="imgFilter">
                     <img src="@/assets/pic/productsEarrings.png" class="rounded-3 img-fluid" width="350" alt="耳環專區">
                   </div>
                   <div class="productItem-text">
                      <h4>耳環 Earrings</h4>
                   </div>
-              </router-link>
+              </a>
             </div>
           </div>
         </div>
@@ -195,7 +201,10 @@ import localStorageFavorite from '@/libs/localStorageFavorite'
 export default {
   data () {
     return {
-      products: [],
+      saleProducts: [],
+      isCopied: false,
+      isLoading: false,
+      favorite: JSON.parse(localStorage.getItem('favorite')) || [],
       modules: [Navigation, Pagination, Autoplay],
       swiperOptions: {
         breakpoints: {
@@ -224,18 +233,54 @@ export default {
   },
   mixins: [localStorageFavorite],
   methods: {
-    getProducts () {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`
+    getSale () {
+      this.isLoading = true
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http.get(url).then((res) => {
-        this.products = res.data.products
+        const productsAll = res.data.products
+        this.isLoading = false
+        productsAll.forEach((item) => {
+          if (item.price !== item.origin_price) {
+            this.saleProducts.push(item)
+          }
+        })
       })
+        .catch((err) => {
+          console.log(err)
+          this.isLoading = false
+        })
     },
     routerPush (id) {
       this.$router.push(`/product/${id}`)
+    },
+    goToCategory (category) {
+      this.$router.push({
+        name: 'products',
+        params: { categoryName: category }
+      })
+    },
+    copyCouponCode () {
+      // this.$StatusMsg(true, '複製', '您已成功複製優惠碼!')
+      // 建立 Range 物件
+      const range = document.createRange()
+      range.selectNode(this.$refs.couponCode)
+      // 取得 Selection 物件
+      const selection = window.getSelection()
+      // 先清空當前選取範圍
+      selection.removeAllRanges()
+      // 加入 Range
+      selection.addRange(range)
+      document.execCommand('copy') // 執行瀏覽器複製命令
+      this.isCopied = true
+      this.$statusMsg(true, '複製', '您已成功複製優惠碼!')
     }
   },
   mounted () {
-    this.getProducts()
+    this.getSale()
+    this.isLoading = true
+    setTimeout(() => {
+      this.isLoading = false
+    }, 1000)
   }
 }
 </script>
@@ -306,22 +351,8 @@ export default {
   padding: 160px 0px 160px 0px;
   background-color: rgba(0, 0, 0, 0.65);
 }
-
-.discount_code_input {
-  cursor: pointer;
-  border: 0;
-  outline: none;
-  background-color: #E0C8AB;
-  border-radius: 4px;
-  box-shadow: 5px 5px 6px #3c3c3c;
-}
-
-.bi.bi-front {
-  position: relative;
-  top: -35px;
-  left: 207px;
-  color: #E0C8AB;
-  font-size: 20px;
+.copyCoupon {
+  z-index: -3;
 }
 
 .section_bg {
@@ -336,19 +367,16 @@ export default {
   width: 298px;
   -o-object-fit: cover;
   object-fit: cover;
+  cursor: pointer;
 }
-
+.bi.bi-heart-fill, .bi.bi-heart {
+  cursor: pointer;
+}
 .swiper {
   padding: 36px;
 }
 .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
     bottom: -3px;
-}
-
-.bi.bi-heart {
-  position: relative;
-  color: #ffff;
-  font-size: 28px;
 }
 
 .popular_right {

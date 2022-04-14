@@ -1,36 +1,9 @@
 <template>
-<div class="bg-color pb-12">
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
+<div class="bg-primary pb-12">
     <div class="container py-5 overflow-hidden">
-        <!-- <div class="row row-cols-4 row-cols-sm-4 my-8">
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>1</span>
-                     <span>購物車</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>2</span>
-                     <span>建立訂單</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>3</span>
-                     <span>訂單確認</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>4</span>
-                     <span>完成購物</span>
-                </div>
-            </div>
-        </div> -->
         <div class="row pt-7 pb-3">
             <nav aria-label="breadcrumb">
                     <ol class="breadcrumb px-0 mb-0 py-3">
@@ -40,7 +13,11 @@
         </div>
         <div class="row gx-6">
             <div class="col-12 col-lg-7 mb-md-5">
-                <table class="table bg-color-content p-4 rounded text-primary" v-if="cartData.carts">
+                <div class="bg-secondary p-4 rounded text-primary text-center" v-if="cartData.carts.length <= 0">
+                        <p class="text-xl fw-bolder py-3">您的購物車目前沒有商品<br>快去逛逛放入喜歡的商品吧</p>
+                        <router-link :to="`/products`" class="btn btn-outline-primary text-light">前往商店</router-link>
+                    </div>
+                <table class="table bg-secondary p-4 rounded text-primary" v-else>
                     <tr class="d-none d-md-flex row g-0 p-4 text-light border-0">
                         <td class="col-4">商品資料</td>
                         <td class="col-2">單件價格</td>
@@ -68,7 +45,7 @@
                                             id=""
                                             class="form-select"
                                             v-model="item.qty"
-                                            @click="updateCartItem(item)"
+                                            @change="updateCartItem(item)"
                                             >
                                         <option
                                             :value="num"
@@ -97,7 +74,7 @@
                 </table>
             </div>
             <div class="col-12 col-lg-5">
-                <table class="table bg-color-content p-4 rounded text-primary">
+                <table class="table bg-secondary p-4 rounded text-primary">
                     <thead>
                         <tr class="d-block m-2">
                             <th class="border-0">訂單摘要</th>
@@ -109,14 +86,14 @@
                             <td class="text-center">NT$ {{cartData.total}}</td>
                         </tr>
                         <tr class="border-0">
-                            <th class="ps-3"><input type="text" placeholder="輸入優惠代碼(new85)" v-model="coupon_code" class="input-coupon text-light"></th>
+                            <th class="ps-3"><input type="text" placeholder="請輸入優惠折扣碼" v-model="coupon_code" class="input-coupon text-light"></th>
                             <td class="text-center">
                                 <button type="button" class="btn btn-outline-primary text-light" @click="addCouponCode">使用</button>
                             </td>
                         </tr>
                         <tr v-if="cartData.final_total !== cartData.total">
-                            <th class="text-success ps-3">折扣價</th>
-                            <td class="text-success text-center">NT$ {{cartData.final_total}}</td>
+                            <th class="text-danger ps-3">折扣價</th>
+                            <td class="text-danger text-center">NT$ {{cartData.final_total}}</td>
                         </tr>
                         <tr v-else>
                             <th class="ps-3">總金額</th>
@@ -126,8 +103,8 @@
                     <tfoot>
                          <tr>
                             <td colspan="5" class="border-bottom-0 pt-3 text-end pe-4">
-                                <div class="btn btn-outline-primary">
-                                    <router-link to="/check" :disabled="cartData.carts.length === 0">前往結帳</router-link>
+                                <div class="btn btn-outline-primary" :class="{ 'disabled ': cartData.carts.length === 0 }">
+                                    <a href="#/check">前往結帳</a>
                                 </div>
                             </td>
                         </tr>
@@ -151,7 +128,8 @@ export default {
       },
       products: [],
       productId: '',
-      coupon_code: ''
+      coupon_code: '',
+      isLoading: false
     }
   },
   components: {
@@ -159,9 +137,12 @@ export default {
   },
   methods: {
     getCart () {
+      this.isLoading = true
       this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
-        console.log(res.data.data)
         this.cartData = res.data.data
+        this.isLoading = false
+      }).catch((err) => {
+        console.log(err)
       })
     },
     updateCartItem (item) {
@@ -173,19 +154,27 @@ export default {
         .put(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, { data })
         .then((res) => {
           this.getCart()
+          this.$statusMsg(res, '更新', '已成功更新購物車')
+        }).catch(() => {
+          this.$StatusMsg(false, '更新', '更新購物車失敗')
         })
     },
     removeCartItem (id) {
       this.$http.delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart/${id}`).then((res) => {
         this.getCart()
         emitter.emit('get-cart')
+        this.$statusMsg(res, '刪除', '已成功刪除品項')
+      }).catch(() => {
+        this.$StatusMsg(false, '刪除', '刪除品項失敗')
       })
     },
     removeAllCart () {
       this.$http.delete(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/carts`).then((res) => {
-        alert(res.data.message)
         this.getCart()
         emitter.emit('get-cart')
+        this.$statusMsg(res, '刪除', '已成功清空購物車')
+      }).catch(() => {
+        this.$StatusMsg(false, '刪除', '清空購物車失敗')
       })
     },
     addCouponCode () {
@@ -195,9 +184,9 @@ export default {
       }
       this.$http.post(url, { data: coupon }).then((res) => {
         this.getCart()
-        alert(res.data.message)
-      }).catch((err) => {
-        console.log(err)
+        this.$statusMsg(res, '套用', '已套用優惠券')
+      }).catch(() => {
+        this.$statusMsg(false, '套用', '已套用優惠券')
       })
     }
   },
@@ -207,13 +196,6 @@ export default {
 }
 </script>
 <style lang="scss">
-.bg-color {
-    background-color: #755B44;
-}
-
-.bg-color-content {
-    background-color:#CCB69A;
-}
 .btn-outline-primary:hover {
     color: #fff;
     background-color: #755B44;

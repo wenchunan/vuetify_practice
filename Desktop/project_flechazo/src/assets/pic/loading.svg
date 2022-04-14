@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0.85); display: block; shape-rendering: auto;" width="1980px" height="1980px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<circle cx="48" cy="50" fill="#fed8a6" r="2">
+  <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="48;52;48" begin="-0.5s"></animate>
+</circle>
+<circle cx="52" cy="50" fill="#af7535" r="2">
+  <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="48;52;48" begin="0s"></animate>
+</circle>
+<circle cx="48" cy="50" fill="#fed8a6" r="2">
+  <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="48;52;48" begin="-0.5s"></animate>
+  <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
+</circle>
+</svg>

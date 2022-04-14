@@ -1,49 +1,15 @@
 <template>
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
 <div class="bg-color pb-12">
     <div class="container py-5 overflow-hidden">
-        <div class="row pt-7 pb-3">
-            <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb px-0 mb-0 py-3">
-                        <li class="breadcrumb-item"><a href="#/cart">購物車</a></li>
-                        <li class="breadcrumb-item"><a href="#/cart">建立訂單</a></li>
-                    </ol>
-                </nav>
-        </div>
-         <!-- <div class="row row-cols-4 row-cols-sm-4 my-8">
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>1</span>
-                     <span>購物車</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>2</span>
-                     <span>建立訂單</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>3</span>
-                     <span>訂單確認</span>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="d-flex flex-column justify-content-center">
-                     <i class="bi bi-check2-circle check-step-icon"></i>
-                     <span>4</span>
-                     <span>完成購物</span>
-                </div>
-            </div>
-        </div> -->
+        <OrderNav :cartData="cartData"></OrderNav>
         <div class="row row-cols-1 row-cols-lg-2 flex-column-reverse flex-lg-row my-5 gx-6">
             <div class="col">
                 <VueForm ref="form" v-slot="{ errors }" @submit="createOrder" class="bg-color-content py-5 px-4 rounded-2">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">Email<sup>*</sup>：</label>
                         <VueField
                         id="email"
                         name="email"
@@ -60,7 +26,7 @@
                         ></ErrorMessage>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">姓名</label>
+                        <label for="name" class="form-label">姓名<sup>*</sup>：</label>
                         <VueField
                         id="name"
                         name="姓名"
@@ -77,7 +43,7 @@
                         ></ErrorMessage>
                     </div>
                      <div class="mb-3">
-                        <label for="tel" class="form-label">電話</label>
+                        <label for="tel" class="form-label">電話<sup>*</sup>：</label>
                         <VueField
                         id="tel"
                         name="電話"
@@ -94,7 +60,7 @@
                         ></ErrorMessage>
                     </div>
                      <div class="mb-3">
-                        <label for="address" class="form-label">地址</label>
+                        <label for="address" class="form-label">地址<sup>*</sup>：</label>
                         <VueField
                             id="address"
                             name="地址"
@@ -172,6 +138,7 @@
 <script>
 import FrontFooter from '@/components/FrontFooter.vue'
 import emitter from '@/utils/emitter'
+import OrderNav from '@/components/OrderNav.vue'
 export default {
   data () {
     return {
@@ -180,6 +147,7 @@ export default {
       },
       products: [],
       productId: '',
+      isLoading: false,
       form: {
         user: {
           name: '',
@@ -192,13 +160,14 @@ export default {
     }
   },
   components: {
-    FrontFooter
+    FrontFooter, OrderNav
   },
   methods: {
     getCart () {
+      this.isLoading = true
       this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`).then((res) => {
-        console.log(res.data.data)
         this.cartData = res.data.data
+        this.isLoading = false
       })
     },
     createOrder () {
@@ -206,11 +175,13 @@ export default {
       this.$http
         .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`, { data: order })
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '送出', '已成功送出訂單')
           this.$refs.form.resetForm()
           this.getCart()
           emitter.emit('get-cart')
           this.$router.push(`/order/${res.data.orderId}`)
+        }).catch(() => {
+          this.$statusMsg(false, '送出', '送出訂單失敗')
         })
     },
     isPhone (value) {
@@ -236,5 +207,8 @@ export default {
     overflow: hidden;
     -o-object-fit: cover;
     object-fit: cover;
+}
+label sup {
+    color: #de2c2c;
 }
 </style>

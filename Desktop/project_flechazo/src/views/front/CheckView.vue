@@ -175,13 +175,11 @@ export default {
       this.$http
         .post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`, { data: order })
         .then((res) => {
-          this.$statusMsg(res, '送出', '已成功送出訂單')
           this.$refs.form.resetForm()
           this.getCart()
           emitter.emit('get-cart')
           this.$router.push(`/order/${res.data.orderId}`)
         }).catch(() => {
-          this.$statusMsg(false, '送出', '送出訂單失敗')
         })
     },
     isPhone (value) {

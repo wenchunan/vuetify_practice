@@ -184,7 +184,7 @@ export default {
       }
       this.$http.post(url, { data: coupon }).then((res) => {
         this.getCart()
-        this.$statusMsg(res, '套用', '已套用優惠券')
+        // this.$statusMsg(res, '套用', '已套用優惠券')
       }).catch(() => {
         this.$statusMsg(false, '套用', '已套用優惠券')
       })

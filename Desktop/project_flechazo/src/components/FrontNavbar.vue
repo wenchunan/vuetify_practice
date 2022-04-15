@@ -1,13 +1,24 @@
 <template>
-<div class="navbar navigation bg-secondary py-3 fixed-top" :class="{ 'bg-primary': scrollDown }">
-  <div class="container-fluid px-3 d-flex align-items-center">
+<div class="navbar navigation py-3 fixed-top container-fluid px-3 d-flex" :class="yScrollValue < 50 ? '':'navbar-bg'">
      <router-link class="navbar-brand" to="/"><img src="@/assets/pic/flechazo.png" width="110" alt=""></router-link>
-      <input type="checkbox" class="navigation__checkbox bar-toggler" id="navi-toggle"/>
+     <div class="d-flex align-items-center">
+       <div class="me-0 me-md-2" :class="yScrollValue < 50 ? 'd-none':''">
+         <a href="#/favorite" class="btn position-relative px-1 me-3">
+          <i class="bi bi-heart-fill text-primary fs-5"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-1">{{favorite}}</span>
+        </a>
+       </div>
+       <div class="me-2 me-md-4" :class="yScrollValue < 50 ? 'd-none':''">
+         <a href="#/cart" class="btn position-relative px-1 me-3">
+          <i class="bi bi-cart-fill text-primary fs-4"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{cartData.carts.length}}</span>
+        </a>
+       </div>
+        <input type="checkbox" class="navigation__checkbox bar-toggler" id="navi-toggle"/>
       <label for="navi-toggle" class="navigation__button">
         <span class="navigation__icon">&nbsp;</span>
       </label>
-      <div class="navigation__background">&nbsp;</div>
-
+      <div class="navigation__background me-2">&nbsp;</div>
       <nav class="navigation__nav">
         <ul class="navigation__list">
           <li class="navigation__item">
@@ -40,88 +51,8 @@
           </li>
         </ul>
       </nav>
+     </div>
   </div>
-  <a href="#/favorite" class="btn position-relative px-1 me-3">
-     <i class="bi bi-heart-fill text-primary fs-5"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-1">{{favorite}}</span>
-    </a>
-    <a href="#/cart" class="btn position-relative px-1 me-3">
-      <i class="bi bi-cart-fill text-primary fs-4"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{cartData.carts.length}}</span>
-    </a>
-    </div>
-  <!-- <div class="navigation">
-      <input type="checkbox" class="navigation__checkbox bar-toggler" id="navi-toggle"/>
-
-      <label for="navi-toggle" class="navigation__button">
-        <span class="navigation__icon">&nbsp;</span>
-      </label>
-
-      <div class="navigation__background">&nbsp;</div>
-
-      <nav class="navigation__nav">
-        <ul class="navigation__list">
-          <li class="navigation__item">
-            <router-link to="/"
-                @click="navCollapseBack"
-                class="navigation__link">
-                    <span>01</span>首頁 flechazo
-            </router-link>
-          </li>
-          <li class="navigation__item">
-            <router-link to="/products"
-                @click="navCollapseBack"
-                class="navigation__link">
-                    <span>02</span>商品專區
-            </router-link>
-          </li>
-          <li class="navigation__item">
-            <router-link to="/protect"
-                @click="navCollapseBack"
-                class="navigation__link">
-                    <span>03</span>飾品保養
-            </router-link>
-          </li>
-          <li class="navigation__item">
-            <router-link to="/about"
-                @click="navCollapseBack"
-                class="navigation__link">
-                      <span>04</span>關於品牌
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-    </div> -->
-
-  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-secondary fixed-top">
-  <div class="container-fluid">
-    <router-link class="navbar-brand" to="/"><img src="@/assets/pic/flechazo.png" width="100" alt=""></router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <router-link class="nav-link" to="/">首頁</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/products">產品列表</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/cart">購物車</router-link>
-        </li>
-      </ul>
-    </div>
-     <a href="#/favorite" class="btn position-relative px-1 me-3">
-     <i class="bi bi-heart-fill text-primary fs-5"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-1">{{favorite}}</span>
-    </a>
-    <a href="#/cart" class="btn position-relative px-1 me-3">
-      <i class="bi bi-cart-fill text-primary fs-4"></i>
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{cartData.carts.length}}</span>
-    </a>
-  </div>
-  </nav> -->
 </template>
 <script>
 import emitter from '@/utils/emitter'
@@ -132,7 +63,7 @@ export default {
         carts: []
       },
       favorite: '',
-      scrollDown: false
+      yScrollValue: ''
     }
   },
   methods: {
@@ -145,16 +76,13 @@ export default {
       const navbarToggle = document.querySelector('.bar-toggler')
       navbarToggle.click()
     },
-    handleScroll () {
-      if (window.scrollY > 100) {
-        this.scrollDown = true
-      } else {
-        this.scrollDown = false
-      }
+    scrollWatch () {
+      this.yScrollValue = window.scrollY
     }
   },
   mounted () {
     this.getCart()
+    window.addEventListener('scroll', this.scrollWatch)
     emitter.on('get-cart', () => {
       this.getCart()
     })
@@ -172,6 +100,10 @@ export default {
 }
 </script>
 <style lang="scss">
+.navbar-bg {
+  background-color: #ccb69a;
+  box-shadow: 0px 5px 10px rgba(#000, 0.1);
+}
 .navigation {
   &__checkbox {
     display: none;
@@ -180,9 +112,7 @@ export default {
     background-color: #ccb69a;
     height: 4rem;
     width: 4rem;
-    // position: fixed;
     position: absolute;
-    // top: 1rem;
     right: 1rem;
     border-radius: 50%;
     z-index: 2000;
@@ -193,14 +123,10 @@ export default {
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
-    // position: fixed;
-    top: 2.5rem;
-    right: 1.5em;
     background-image: radial-gradient(
      #CCB69A,
      #755B44
     );
-    // z-index: 1000;
     transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
   }
   &__nav {
@@ -221,7 +147,7 @@ export default {
     transform: translate(-50%, -50%);
     list-style: none;
     text-align: center;
-    width: 50%;
+    width: 100%;
   }
   &__item {
     margin: 1rem;

@@ -18,7 +18,7 @@
             </p>
             <a href="#/products" class="pb-2 border-bottom">前往商店 &rarr;</a>
           </div>
-          <div class="col pb-14">
+          <div class="col pb-14 pt-6 pt-md-0">
             <div class="about">
               <img
               width="350"

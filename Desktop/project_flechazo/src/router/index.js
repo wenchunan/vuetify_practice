@@ -76,6 +76,7 @@ const routes = [
       },
       {
         path: 'protect',
+        name: 'protect',
         component: () => import('../views/front/ProtectView.vue'),
         meta: {
           title: '飾品保養 - flechazo'

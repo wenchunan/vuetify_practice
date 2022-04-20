@@ -1,7 +1,7 @@
 <template>
 <div class="bg-secondary py-7 py-md-8 py-lg-8">
     <div class="container overflow-hidden">
-        <h1 class="mb-5">飾品保養小知識</h1>
+        <h1 class="fs-2 mb-5 fw-bold">飾品保養小知識</h1>
         <div class="row row-cols-lg-2 row-cols-md-2">
             <div class="col-md-6 col-lg-6 d-none d-md-block d-lg-block">
                 <img src="@/assets/pic/protect1.png" alt="飾品保養圖1" class="img-fluid protectImg">
@@ -26,27 +26,4 @@
         </div>
     </div>
 </div>
-<FrontFooter></FrontFooter>
 </template>
-<script>
-import FrontFooter from '@/components/FrontFooter.vue'
-export default {
-  components: {
-    FrontFooter
-  }
-}
-</script>
-<style lang="scss">
-.protectImg {
-    width: 635px;
-    height: 480px;
-    object-fit: cover;
-    object-position: center;
-}
-.protectImg-content {
-    width: 635px;
-    height: 350px;
-    object-fit: cover;
-    object-position: center;
-}
-</style>

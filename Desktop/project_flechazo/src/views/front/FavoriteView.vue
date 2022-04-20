@@ -1,54 +1,52 @@
 <template>
-<div class="py-10 bg-primary">
+<div class="py-5 py-md-7 bg-primary">
     <div class="container overflow-hidden" :class="favoriteId.length > 0 ? 'vh-auto' : 'vh-70'">
+        <h1 class="fw-bold pt-6 mb-3 fs-4 col-12 col-lg-7 mb-md-5 mx-auto">我的最愛</h1>
       <!-- 收藏夾為空 -->
-    <div class="row">
-        <h5 class="pb-5">我的最愛</h5>
-        <div class="col-12 col-lg-7 mb-md-5 mx-auto text-center" v-if="favorite.length===0">
-          <i class="fa-solid fa-triangle-exclamation text-primaryDark fa-2x mb-3"></i>
-            <p class="fw-bold mb-4">我的最愛裡還沒有商品ㄛ ~</p>
-            <router-link class="btn btn-secondary text-light" to="/products">來去逛逛
-            </router-link>
-        </div>
-        <div class="col-12 col-lg-7 mb-md-5 mx-auto" v-else>
-                <table class="table bg-color-content p-4 rounded text-primary">
-                    <tr class="d-none d-md-flex row g-0 p-4 text-light border-0">
-                        <td class="col-3">商品資料</td>
-                        <td class="col-4">名稱</td>
-                        <td class="col-2">單件價格</td>
-                        <td class="col-3">加入購物車</td>
-                        <td class="col-1"></td>
-                    </tr>
-                    <tr class="row g-0 p-4 align-items-center" v-for="item in favorite" :key="item.id">
-                        <td class="col-11 col-md-3 mb-md-0 border-0">
-                          <router-link :to="`/product/${item.id}`">
-                            <img :src="item.imageUrl" alt="{{item.title }}" class="me-4 product-img">
-                          </router-link>
-                        </td>
-                        <td class="col-11 col-md-4 mb-md-0 border-0">
-                            <p class="text-base">{{item.title }}</p>
-                        </td>
-                        <td class="col-6 col-md-2 order-4 order-md-0 border-0">
-                            <div class="d-flex d-md-block align-items-end">
-                                <p class="me-3 me-md-0">NT$ {{item.price}}</p>
-                            </div>
-                        </td>
-                        <td class="col-12 col-md-2 order-3 order-md-0  mb-md-0 border-0">
-                            <button type="button" class="btn btn-primary" @click="addToCart(item)">加入購物車</button>
-                        </td>
-                        <td class="col-1 order-2 order-md-0 border-0">
-                            <button type="button" class="btn btn-sm" @click="toggleFavorite(item)">x</button>
-                        </td>
-                    </tr>
-                </table>
+        <div class="row">
+            <div class="col-12 col-lg-7 mb-md-5 mx-auto text-center" v-if="favorite.length===0">
+              <i class="fa-solid fa-triangle-exclamation text-primaryDark fa-2x mb-3"></i>
+                <p class="fw-bold mb-4">我的最愛裡還沒有商品ㄛ ~</p>
+                <router-link class="btn btn-secondary text-light" to="/products">來去逛逛
+                </router-link>
             </div>
-    </div>
+            <div class="col-12 col-lg-7 mb-md-5 mx-auto" v-else>
+                  <table class="table bg-secondary p-4 rounded text-primary">
+                      <tr class="d-none d-md-flex row g-0 p-4 text-light border-0">
+                          <td class="col-3">商品資料</td>
+                          <td class="col-4">名稱</td>
+                          <td class="col-2">單件價格</td>
+                          <td class="col-3">加入購物車</td>
+                          <td class="col-1"></td>
+                      </tr>
+                      <tr class="row g-0 p-4 align-items-center" v-for="item in favorite" :key="item.id">
+                          <td class="col-11 col-md-3 mb-md-0 border-0">
+                            <router-link :to="`/product/${item.id}`">
+                              <img :src="item.imageUrl" :alt="item.title" class="me-4 product-img">
+                            </router-link>
+                          </td>
+                          <td class="col-11 col-md-4 mb-md-0 border-0">
+                              <p class="text-base">{{ item.title }}</p>
+                          </td>
+                          <td class="col-6 col-md-2 order-4 order-md-0 border-0">
+                              <div class="d-flex d-md-block align-items-end">
+                                  <p class="me-3 me-md-0">NT$ {{ item.price }}</p>
+                              </div>
+                          </td>
+                          <td class="col-12 col-md-2 order-3 order-md-0  mb-md-0 border-0">
+                              <button type="button" class="btn btn-outline-primary text-light" @click="addToCart(item)">加入購物車</button>
+                          </td>
+                          <td class="col-1 order-2 order-md-0 border-0">
+                              <button type="button" class="btn btn-sm" @click="toggleFavorite(item)">x</button>
+                          </td>
+                      </tr>
+                  </table>
+            </div>
+        </div>
     </div>
 </div>
-    <FrontFooter></FrontFooter>
 </template>
 <script>
-import FrontFooter from '@/components/FrontFooter.vue'
 import localStorageFavorite from '@/libs/localStorageFavorite'
 import emitter from '@/utils/emitter'
 export default {
@@ -60,9 +58,6 @@ export default {
     }
   },
   mixins: [localStorageFavorite],
-  components: {
-    FrontFooter
-  },
   methods: {
     addToCart (product, qty = 1) {
       this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, {
@@ -87,19 +82,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.bg-color-content {
-    background-color:#CCB69A;
-}
-.btn-outline-primary:hover {
-    color: #fff;
-    background-color: #755B44;
-}
-.product-img {
-    width: 130px;
-    height: 130px;
-    -o-object-fit: cover;
-    object-fit: cover;
-}
-
-</style>

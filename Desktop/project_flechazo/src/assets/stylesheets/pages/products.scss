@@ -1,0 +1,45 @@
+.bg_products {
+    background-image: url('@/assets/pic/productsPagePic.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.vh-40 {
+     height: 40vh;
+}
+@media (min-width: 992px) {
+  .vh-lg-70 {
+    height: 70vh;
+  }
+}
+.cardProduct {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.btn-outline-secondary.active:focus {
+    box-shadow: none
+}
+.card-img {
+    cursor: pointer;
+    overflow: hidden;
+    height: 300px;
+    margin-bottom: 12px;
+}
+.cardProduct img {
+    transition-duration: 0.5s;
+}
+.cardProduct img:hover {
+    filter: brightness(0.8);
+    width: 110%;
+}
+
+@media (min-width: 641px) {
+    .card-img {
+        height: 310px;
+    }
+}
+.listTitle {
+    border-left: solid 8px #CCB69A;
+    padding-left: 12px;
+}

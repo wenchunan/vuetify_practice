@@ -7,21 +7,19 @@
         <div class="row m-3" >
             <div class="col-xl-6 col-md-6 mx-auto bg-secondary p-5 rounded">
                 <div class="d-flex flex-column align-items-center">
-                    <h2 class="fw-bolder">訂單已完成付款，感謝您的購買！</h2>
+                    <h1 class="fs-2 fw-bolder">訂單已完成付款，感謝您的購買！</h1>
                     <i class="bi bi-check-circle-fill flex mt-3"></i>
                     <div class="d-flex w-100 justify-content-center pt-4">
-                        <a href="#/" class="w-50 btn btn-outline-primary text-light me-2">前往首頁</a>
-                        <a href="#/products" class="w-50 btn btn-outline-primary text-light">前往商店</a>
+                        <router-link to="/" class="w-50 btn btn-outline-primary text-light me-2">前往首頁</router-link>
+                        <router-link to="/products" class="w-50 btn btn-outline-primary text-light">前往商店</router-link>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<FrontFooter></FrontFooter>
 </template>
 <script>
-import FrontFooter from '@/components/FrontFooter.vue'
 import OrderNav from '@/components/OrderNav.vue'
 export default {
   data () {
@@ -30,12 +28,7 @@ export default {
     }
   },
   components: {
-    FrontFooter, OrderNav
+    OrderNav
   }
 }
 </script>
-<style lang="scss">
-.bi.bi-check-circle-fill {
-    font-size: 100px;
-}
-</style>

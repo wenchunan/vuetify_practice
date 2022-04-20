@@ -11,7 +11,7 @@
         <div class="modal-content border-0">
           <div class="modal-header">
             <h5 class="modal-title" id="productModalLabel">
-              <span>訂單細節</span>
+              <span class="text-dark">訂單細節</span>
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -19,7 +19,7 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="mb-2">
-                     <h3 class="mb-3">用戶資料</h3>
+                     <h3 class="mb-3 text-dark">用戶資料</h3>
                      <table class="table">
                         <tbody v-if="tempOrder.user">
                             <tr>
@@ -44,7 +44,7 @@
               </div>
               <!-- 右邊資料區塊 -->
               <div class="col-md-8">
-                <h3>訂單細節</h3>
+                <h3 class="text-dark">訂單細節</h3>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -68,12 +68,12 @@
                         </tr>
                     </tbody>
                 </table>
-                <h3>選購商品</h3>
+                <h3 class="text-dark">選購商品</h3>
                 <table class="table">
                     <tbody>
                         <tr v-for="item in tempOrder.products" :key="item.id">
-                            <th>{{ item.product.title}}</th>
-                            <td>{{ item.qty}} / {{ item.product.unit}}</td>
+                            <th>{{ item.product.title }}</th>
+                            <td>{{ item.qty }} / {{ item.product.unit}}</td>
                             <td class="text-end">{{ $filters.toThousands(item.final_total) }}</td>
                         </tr>
                     </tbody>
@@ -82,8 +82,8 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" v-model="tempOrder.is_paid">
                         <label class="form-check-label" for="invalidCheck2">
-                            <span v-if="tempOrder.is_paid">已付款</span>
-                            <span v-else>未付款</span>
+                            <span class="text-dark" v-if="tempOrder.is_paid">已付款</span>
+                            <span class="text-dark" v-else>未付款</span>
                         </label>
                     </div>
                 </div>
@@ -121,7 +121,6 @@ export default {
   watch: {
     order () {
       this.tempOrder = this.order
-      console.log(this.tempOrder)
     }
   }
 }

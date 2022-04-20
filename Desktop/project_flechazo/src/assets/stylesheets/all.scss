@@ -2,3 +2,18 @@
 @import "./helpers/variables";
 
 @import "~bootstrap/scss/bootstrap";
+
+@import 'base/base';
+
+@import 'components/navbar';
+@import 'components/goTop';
+@import 'components/aboutPic';
+@import 'components/imgCard';
+@import 'components/noticeBtn';
+@import 'components/icon';
+
+@import 'utils/input';
+
+@import 'pages/home';
+@import 'pages/products';
+@import 'pages/product';

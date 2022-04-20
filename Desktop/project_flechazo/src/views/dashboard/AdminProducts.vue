@@ -1,7 +1,10 @@
 <template>
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
        <div class="container">
         <!-- 建立產品按鈕 -->
-        <div class="text-end mt-4">
+        <div class="text-end mt-7">
           <button
             type="button"
             class="btn btn-primary"
@@ -24,10 +27,10 @@
           </thead>
           <tbody>
             <tr v-for="item in products" :key="item.id">
-              <td>{{item.category}}</td>
-              <td>{{item.title}}</td>
-              <td>{{item.origin_price}}</td>
-              <td>{{item.price}}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.origin_price }}</td>
+              <td>{{ item.price }}</td>
               <td>
                 <span v-if="item.is_enabled" class="text-success">啟用</span>
                 <span v-else>未啟用</span>
@@ -79,6 +82,7 @@ export default {
       currentPage: 1,
       tempProduct: {},
       isNew: false,
+      isLoading: false,
       modal: {
         delModal: ''
       }
@@ -92,13 +96,14 @@ export default {
   methods: {
     getProducts (page = 1) {
       this.currentPage = page
+      this.isLoading = true
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.$http
         .get(url)
         .then((res) => {
-        //   console.log(res.data.products)
           this.products = res.data.products
           this.pagination = res.data.pagination
+          this.isLoading = false
         })
     },
     openModal (isNew, item) {
@@ -106,7 +111,7 @@ export default {
         this.tempProduct = {}
         this.isNew = true
       } else {
-        this.tempProduct = { ...item }
+        this.tempProduct = JSON.parse(JSON.stringify(item))
         this.isNew = false
       }
       this.$refs.productModal.openModal()
@@ -123,11 +128,13 @@ export default {
 
       this.$http[http](api, { data: this.tempProduct })
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '更新', '更新產品成功')
           this.$refs.productModal.hideModal()
           this.getProducts(this.currentPage)
         })
-        .catch((err) => alert(err.response.data.message))
+        .catch(() => {
+          this.$statusMsg(false, '更新', '更新產品失敗')
+        })
     },
     openDelProductModal (item) {
       this.tempProduct = { ...item }
@@ -138,12 +145,12 @@ export default {
       this.$http
         .delete(url)
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '刪除', '刪除產品成功')
           this.$refs.delModal.hideModal()
           this.getProducts(this.currentPage)
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          this.$statusMsg(false, '刪除', '刪除產品失敗')
         })
     }
   },

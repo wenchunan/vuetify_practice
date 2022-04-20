@@ -27,17 +27,3 @@ export default {
   }
 }
 </script>
-<style>
-.go-top {
-    position: fixed;
-    bottom: 5rem;
-    right: 2rem;
-    z-index: 100;
-    cursor: pointer;
-}
-@media(max-width: 576px) {
-  .go-top {
-    display: none;
-}
-}
-</style>

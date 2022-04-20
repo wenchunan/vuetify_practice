@@ -11,7 +11,7 @@
     <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
-               <h5 class="modal-title" id="couponModalLabel">
+               <h5 class="modal-title text-dark" id="couponModalLabel">
                    <span v-if="isNew">新增優惠券</span>
                    <span v-else>編輯優惠券</span>
                </h5>
@@ -19,20 +19,20 @@
            </div>
            <div class="modal-body">
                 <div class="mb-3">
-                  <label for="title" class="form-label">標題</label>
+                  <label for="title" class="form-label text-dark">標題</label>
                   <input type="text" id="title" class="form-control" placeholder="請輸入標題" v-model="tempCoupon.title">
                 </div>
                 <div class="mb-3">
-                  <label for="coupon_code" class="form-label">優惠碼</label>
+                  <label for="coupon_code" class="form-label text-dark">優惠碼</label>
                   <input type="text" id="coupon_code" class="form-control" placeholder="請輸入優惠碼" v-model="tempCoupon.code">
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 text-dark">
                     <label for="due_date">到期日</label>
                     <input type="date" class="form-control" id="due_date"
                         v-model="due_date">
                 </div>
                 <div class="mb-3">
-                  <label for="price" class="form-label">折扣百分比</label>
+                  <label for="price" class="form-label text-dark">折扣百分比</label>
                   <input type="number" id="price" class="form-control" min="0" placeholder="請輸入折扣百分比" v-model.number="tempCoupon.percent">
                 </div>
                 <div class="mb-3">
@@ -45,7 +45,7 @@
                               class="form-check-input"
                               placeholder="請輸入折扣百分比" v-model="tempCoupon.is_enabled"
                         >
-                        <label for="is_enabled" class="form-check-label">是否啟用</label>
+                        <label for="is_enabled" class="form-check-label text-dark">是否啟用</label>
                     </div>
                 </div>
            </div>
@@ -83,9 +83,10 @@ export default {
   mixins: [modalMixin],
   watch: {
     coupon () {
-      this.tempCoupon = this.coupon
+      this.tempCoupon = JSON.parse(JSON.stringify(this.coupon))
       const dateAndTime = new Date(this.tempCoupon.due_date * 1000)
-      dateAndTime.toISOString().split('T')
+        .toISOString().split('T')
+      this.due_date = dateAndTime
     },
     due_date () {
       this.tempCoupon.due_date = Math.floor(new Date(this.due_date) / 1000)

@@ -1,7 +1,10 @@
 <template>
-    <div class="container">
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
+    <div class="container mb-7">
         <!-- 建立產品按鈕 -->
-        <div class="text-end mt-4">
+        <div class="text-end mt-7">
           <button
             type="button"
             class="btn btn-primary"
@@ -72,6 +75,7 @@ export default {
       coupons: {},
       tempCoupon: {},
       isNew: false,
+      isLoading: false,
       modal: {
         delModal: ''
       }
@@ -83,11 +87,13 @@ export default {
   },
   methods: {
     getCoupons () {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupons`
       this.$http
         .get(url)
         .then((res) => {
           this.coupons = res.data.coupons
+          this.isLoading = false
         }).catch((err) => {
           console.log(err)
         })
@@ -95,7 +101,8 @@ export default {
     openCouponModal (isNew, item) {
       if (isNew) {
         this.tempCoupon = {
-          due_date: new Date().getTime() / 1000
+          due_date: new Date().getTime() / 1000,
+          is_enabled: 0
         }
         this.isNew = true
       } else {
@@ -109,35 +116,36 @@ export default {
       this.$refs.delModal.openModal()
     },
     delCoupon () {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
       this.$http
         .delete(url)
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '更新', '已成功刪除優惠券')
           this.$refs.delModal.hideModal()
           this.getCoupons()
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          this.$statusMsg(false, '更新', '刪除優惠券失敗')
         })
     },
     updateCoupon (item) {
       this.tempCoupon = item
-      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
+      let api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let http = 'post'
 
       if (!this.isNew) {
-        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+        api = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         http = 'put'
       }
-
       this.$http[http](api, { data: this.tempCoupon })
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '更新', '已成功更新優惠券')
           this.getCoupons()
           this.$refs.couponModal.hideModal()
         })
-        .catch((err) => alert(err.response.data.message))
+        .catch(() => {
+          this.$statusMsg(false, '更新', '更新優惠券失敗')
+        })
     }
   },
   mounted () {

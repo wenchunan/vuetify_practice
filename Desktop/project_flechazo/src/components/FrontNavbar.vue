@@ -5,13 +5,13 @@
        <div class="me-0 me-md-2" :class="yScrollValue < 50 ? 'd-none':''">
          <a href="#/favorite" class="btn position-relative px-1 me-3">
           <i class="bi bi-heart-fill text-primary fs-5"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-1">{{favorite}}</span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-1">{{ favorite }}</span>
         </a>
        </div>
        <div class="me-2 me-md-4" :class="yScrollValue < 50 ? 'd-none':''">
          <a href="#/cart" class="btn position-relative px-1 me-3">
           <i class="bi bi-cart-fill text-primary fs-4"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{cartData.carts.length}}</span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{ cartData.carts.length }}</span>
         </a>
        </div>
         <input type="checkbox" class="navigation__checkbox bar-toggler" id="navi-toggle"/>
@@ -99,150 +99,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.navbar-bg {
-  background-color: #ccb69a;
-  box-shadow: 0px 5px 10px rgba(#000, 0.1);
-}
-.navigation {
-  &__checkbox {
-    display: none;
-  }
-  &__button {
-    background-color: #ccb69a;
-    height: 4rem;
-    width: 4rem;
-    position: absolute;
-    right: 1rem;
-    border-radius: 50%;
-    z-index: 2000;
-    text-align: center;
-    cursor: pointer;
-  }
-  &__background {
-    height: 3rem;
-    width: 3rem;
-    border-radius: 50%;
-    background-image: radial-gradient(
-     #CCB69A,
-     #755B44
-    );
-    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
-  }
-  &__nav {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1500;
-
-    opacity: 0;
-    width: 0;
-    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  &__list {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    list-style: none;
-    text-align: center;
-    width: 100%;
-  }
-  &__item {
-    margin: 1rem;
-  }
-  &__link {
-    &:link,
-    &:visited {
-      display: inline-block;
-      font-size: 2rem;
-      font-weight: 400;
-      padding: 1rem 2rem;
-      color: #fff;
-      text-decoration: none;
-      text-transform: uppercase;
-      background-image: linear-gradient(
-        120deg,
-        transparent 0%,
-        transparent 50%,
-        #fff 50%
-      );
-      background-size: 220%;
-      transition: all 0.4s;
-      span {
-        margin-right: 1.5rem;
-        display: inline-block;
-      }
-    }
-    &:hover,
-    &:active {
-      background-position: 100%;
-      color: #755B44;
-      transform: translateX(1rem);
-    }
-  }
-  // Fucntionality
-  &__checkbox:checked ~ &__background {
-    transform: scale(80);
-  }
-  &__checkbox:checked ~ &__nav {
-    opacity: 1;
-    width: 100%;
-  }
-  // icon
-  &__icon {
-    position: relative;
-    margin-top: 1.9rem;
-
-    &,
-    &::before,
-    &::after {
-      width: 2rem;
-      height: 2px;
-      background-color: #755B44;
-      display: inline-block;
-    }
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0px;
-      transition: all 0.2s;
-    }
-    &::before {
-      top: -0.7rem;
-    }
-    &::after {
-      top: 0.7rem;
-    }
-  }
-  &__button:hover &__icon::before {
-    top: -0.9rem;
-  }
-  &__button:hover &__icon::after {
-    top: 0.9rem;
-  }
-  &__checkbox:checked + &__button &__icon {
-    background-color: transparent;
-  }
-  &__checkbox:checked + &__button &__icon::before {
-    top: 0;
-    transform: rotate(135deg);
-  }
-  &__checkbox:checked + &__button &__icon::after {
-    top: 0;
-    transform: rotate(-135deg);
-  }
-}
-@media(max-width: 576px) {
-      .navigation__list {
-        left: 45%;
-    }
-}
-@media(max-width: 576px) {
-    .navigation__link:link {
-        font-size: 1.5rem;
-    }
-}
-</style>

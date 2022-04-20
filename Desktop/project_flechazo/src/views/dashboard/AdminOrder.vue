@@ -1,7 +1,10 @@
 <template>
+<VueLoading :active="isLoading">
+  <img src="@/assets/pic/loading.svg" alt="loadingSvg">
+</VueLoading>
      <div class="container">
         <!-- 表單內容 -->
-        <table class="table mt-4">
+        <table class="table mt-7">
           <thead>
             <tr>
               <th>購買時間</th>
@@ -79,6 +82,7 @@ export default {
       pagination: {},
       currentPage: 1,
       tempOrder: {},
+      isLoading: false,
       modal: {
         delModal: ''
       }
@@ -96,7 +100,6 @@ export default {
       this.$http
         .get(url)
         .then((res) => {
-          console.log(res.data.orders)
           this.orders = res.data.orders
           this.pagination = res.data.pagination
         })
@@ -110,19 +113,19 @@ export default {
       this.$refs.delModal.openModal()
     },
     delOrder () {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
       this.$http
         .delete(url)
         .then((res) => {
-          alert(res.data.message)
+          this.$statusMsg(res, '刪除', '刪除訂單成功')
           this.$refs.delModal.hideModal()
           this.getOrders(this.currentPage)
-        }).catch((err) => {
-          console.log(err)
+        }).catch(() => {
+          this.$statusMsg(false, '刪除', '刪除訂單失敗')
         })
     },
     updatePaid (item) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
       const paid = {
         is_paid: item.is_paid
       }
@@ -131,9 +134,9 @@ export default {
         .then((res) => {
           this.$refs.orderModal.hideModal()
           this.getOrders(this.currentPage)
-          alert(res.data.message)
-        }).catch((err) => {
-          console.log(err)
+          this.$statusMsg(res, '更新', '已成功更新訂單')
+        }).catch(() => {
+          this.$statusMsg(false, '失敗', '更新訂單失敗')
         })
     }
   },

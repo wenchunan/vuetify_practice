@@ -2,14 +2,15 @@
 <VueLoading :active="isLoading">
   <img src="@/assets/pic/loading.svg" alt="loadingSvg">
 </VueLoading>
-<div class="bg-color pb-12">
+<div class="bg-primary pb-12">
     <div class="container py-5 overflow-hidden">
+       <h1 class="fw-bold pt-md-7 pt-6 mb-3 fs-4">訂單流程</h1>
         <OrderNav :cartData="cartData"></OrderNav>
         <div class="row row-cols-1 row-cols-lg-2 flex-column-reverse flex-lg-row my-5 gx-6">
             <div class="col">
-                <VueForm ref="form" v-slot="{ errors }" @submit="createOrder" class="bg-color-content py-5 px-4 rounded-2">
+                <VueForm ref="form" v-slot="{ errors }" @submit="createOrder" class="bg-secondary py-5 px-4 rounded-2">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email<sup>*</sup>：</label>
+                        <label for="email" class="form-label">Email<sup class="text-danger">*</sup>：</label>
                         <VueField
                         id="email"
                         name="email"
@@ -26,7 +27,7 @@
                         ></ErrorMessage>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">姓名<sup>*</sup>：</label>
+                        <label for="name" class="form-label">姓名<sup class="text-danger">*</sup>：</label>
                         <VueField
                         id="name"
                         name="姓名"
@@ -43,11 +44,11 @@
                         ></ErrorMessage>
                     </div>
                      <div class="mb-3">
-                        <label for="tel" class="form-label">電話<sup>*</sup>：</label>
+                        <label for="tel" class="form-label">電話<sup class="text-danger">*</sup>：</label>
                         <VueField
                         id="tel"
                         name="電話"
-                        type="number"
+                        type="tel"
                         class="form-control"
                         :class="{ 'is-invalid': errors['電話'] }"
                         placeholder="請輸入電話"
@@ -60,7 +61,7 @@
                         ></ErrorMessage>
                     </div>
                      <div class="mb-3">
-                        <label for="address" class="form-label">地址<sup>*</sup>：</label>
+                        <label for="address" class="form-label">地址<sup class="text-danger">*</sup>：</label>
                         <VueField
                             id="address"
                             name="地址"
@@ -87,12 +88,12 @@
                         ></textarea>
                     </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-outline-primary text-light" :disabled="Object.keys(errors).length > 0 || cartData.carts.length === 0">送出訂單</button>
+                        <button type="submit" class="notice-btn btn border-0 text-light fw-bold rounded py-2 px-3" :disabled="Object.keys(errors).length > 0 || cartData.carts.length === 0">送出訂單</button>
                     </div>
                 </VueForm>
             </div>
             <div class="col">
-                <div class="bg-color-content py-3 px-5 rounded-2 mb-3">
+                <div class="bg-secondary py-3 px-5 rounded-2 mb-3">
                     <div class="row py-4 align-items-center border-bottom" v-if="cartData.carts">
                         <div class="col-6">
                             <p>商品資訊</p>
@@ -107,15 +108,15 @@
                     <div class="row py-4 align-items-center border-bottom" v-for="item in cartData.carts" :key="item.id">
                         <div class="col-6">
                              <div class="d-flex align-items-center">
-                                 <img class="me-4 product-img" :src="item.product.imageUrl" alt="{{item.product.title }}">
-                                 <p>{{item.product.title }}</p>
+                                 <img class="me-4 product-img" :src="item.product.imageUrl" :alt="item.product.title">
+                                 <p>{{ item.product.title }}</p>
                              </div>
                         </div>
                         <div class="col-3 px-4">
-                            <p>{{item.qty}}</p>
+                            <p>{{ item.qty }}</p>
                         </div>
                         <div class="col-3">
-                            <p>NT$ {{item.total}}</p>
+                            <p>NT$ {{ item.total }}</p>
                         </div>
                     </div>
                     <div class="row px-4 pt-4 border-top border-white border-2">
@@ -124,8 +125,8 @@
                             <p class="ftext-lg" v-else>總計:</p>
                         </div>
                         <div class="col-3">
-                            <p class="fw-bold text-lg ps-3" v-if="cartData.final_total !== cartData.total">NT$ {{cartData.final_total}}</p>
-                            <p class="fw-bold text-lg ps-3" v-else>NT$ {{cartData.total}}</p>
+                            <p class="fw-bold text-lg ps-3" v-if="cartData.final_total !== cartData.total">NT$ {{ cartData.final_total }}</p>
+                            <p class="fw-bold text-lg ps-3" v-else>NT$ {{ cartData.total }}</p>
                         </div>
                     </div>
                 </div>
@@ -133,10 +134,8 @@
         </div>
     </div>
 </div>
-<FrontFooter></FrontFooter>
 </template>
 <script>
-import FrontFooter from '@/components/FrontFooter.vue'
 import emitter from '@/utils/emitter'
 import OrderNav from '@/components/OrderNav.vue'
 export default {
@@ -160,7 +159,7 @@ export default {
     }
   },
   components: {
-    FrontFooter, OrderNav
+    OrderNav
   },
   methods: {
     getCart () {
@@ -192,21 +191,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.bg-color {
-    background-color: #755B44;
-}
-.bg-color-content {
-    background-color: #CCB69A
-}
-.product-img {
-    width: 130px;
-    height: 130px;
-    overflow: hidden;
-    -o-object-fit: cover;
-    object-fit: cover;
-}
-label sup {
-    color: #de2c2c;
-}
-</style>

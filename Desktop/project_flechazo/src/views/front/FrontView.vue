@@ -1,17 +1,17 @@
 <template>
   <FrontNavbar/>
   <GoTop/>
-  <ToastMsg/>
   <router-view/>
+  <FrontFooter/>
 </template>
 
 <script>
 import FrontNavbar from '@/components/FrontNavbar.vue'
 import GoTop from '@/components/GoTop.vue'
-import ToastMsg from '@/components/ToastMsg.vue'
+import FrontFooter from '@/components/FrontFooter.vue'
 export default {
   components: {
-    FrontNavbar, GoTop, ToastMsg
+    FrontNavbar, GoTop, FrontFooter
   }
 }
 </script>

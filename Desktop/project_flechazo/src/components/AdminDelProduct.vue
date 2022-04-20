@@ -20,9 +20,9 @@
                         aria-label="Close"
                     ></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-dark">
                     是否刪除
-                    <strong class="text-danger">{{tempProduct.title}}</strong>
+                    <strong class="text-danger text-dark">{{ tempProduct.title }}</strong>
                     商品(刪除後將無法恢復)
                     </div>
                     <div class="modal-footer">

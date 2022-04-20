@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="productModalLabel">
+            <h5 class="modal-title text-dark" id="productModalLabel">
               <span v-if="isNew">新增產品</span>
               <span v-else>編輯產品</span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -21,22 +21,22 @@
               <div class="col-sm-4">
                 <!-- 主要圖片區塊 -->
                 <div class="mb-2">
-                  <div class="mb-3">
+                  <div class="mb-3 text-dark">
                      <h3 class="mb-3">主要圖片</h3>
                   <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                  <input type="text" v-model="tempProduct.imageUrl" class="form-control" placeholder="請輸入圖片連結">
+                  <input id="imageUrl" type="text" v-model="tempProduct.imageUrl" class="form-control" placeholder="請輸入圖片連結">
                   </div>
                   <img :src="tempProduct.imageUrl" class="img-fluid">
                 </div>
                 <!-- 多圖新增 -->
-                <h3 class="mb-3">多圖新增</h3>
+                <h3 class="mb-3 text-dark">多圖新增</h3>
                 <!--如果暫存產品物件內有imagesUrl多圖陣列就  -->
                 <div v-if="Array.isArray(tempProduct.imagesUrl)">
                     <!-- 顯示陣列中所有圖片 -->
                   <div class="mb-1" v-for="(image,key) in tempProduct.imagesUrl" :key="key">
-                    <div class="mb-3">
+                    <div class="mb-3 text-dark">
                       <label for="imagesUrl" class="form-label">圖片網址</label>
-                      <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="tempProduct.imagesUrl[key]">
+                      <input id="imagesUrl" type="text" class="form-control" placeholder="請輸入圖片連結" v-model="tempProduct.imagesUrl[key]">
                     </div>
                     <img :src="image" class="img-fluid">
                   </div>
@@ -61,7 +61,7 @@
               </div>
               </div>
               <!-- 右邊資料區塊 -->
-              <div class="col-sm-8">
+              <div class="col-sm-8 text-dark">
                 <div class="mb-3">
                   <label for="title" class="form-label">標題</label>
                   <input type="text" id="title" class="form-control" placeholder="請輸入標題" v-model="tempProduct.title">

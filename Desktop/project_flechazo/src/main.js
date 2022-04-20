@@ -22,6 +22,7 @@ import emitter from '@/utils/emitter'
 
 import App from './App.vue'
 import router from './router'
+import { toThousands, date } from '@/libs/filters.js'
 
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule])
@@ -33,6 +34,9 @@ configure({
 setLocale('zh_TW')
 
 const app = createApp(App)
+app.config.globalProperties.$filters = {
+  toThousands, date
+}
 app.use(router)
 app.config.globalProperties.$statusMsg = $statusMsg
 app.config.globalProperties.$emitter = emitter

@@ -1,0 +1,19 @@
+.product-img {
+    width: 130px;
+    height: 130px;
+    overflow: hidden;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.protectImg {
+    width: 635px;
+    height: 480px;
+    object-fit: cover;
+    object-position: center;
+}
+.protectImg-content {
+    width: 635px;
+    height: 350px;
+    object-fit: cover;
+    object-position: center;
+}

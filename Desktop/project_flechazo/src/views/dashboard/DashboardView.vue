@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">後台</a>
+     <router-link class="nav-link text-light" to="/admin/products">後台</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,9 +16,6 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/admin/coupon">優惠券</router-link>
         </li>
-         <!-- <li class="nav-item">
-          <router-link class="nav-link" to="/admin/blog">貼文</router-link>
-        </li> -->
         <li class="nav-item">
           <router-link class="nav-link" to="/" @click.prevent="signout">登出</router-link>
         </li>
@@ -53,26 +50,20 @@ export default {
           .then(() => {
             this.checkSuccess = true
           })
-          .catch((err) => {
-            alert(err.data.message)
+          .catch(() => {
+            this.$statusMsg(false, '登入', '登入失敗')
             this.$router.push('/login')
           })
       } else {
-        alert('您尚未登入')
+        this.$statusMsg(false, '登入', '您尚未登入')
         this.$router.push('/login')
       }
     },
-    signout () {
+    signout (err) {
       document.cookie = 'annaToken=;expires=;'
-      alert('token 已清除')
+      this.$statusMsg(err, '登出', '登出成功! token 已清除')
       this.$router.push('/login')
     }
   }
 }
 </script>
-
-<style lang="scss">
-body {
-  padding-top: 80px;
-}
-</style>

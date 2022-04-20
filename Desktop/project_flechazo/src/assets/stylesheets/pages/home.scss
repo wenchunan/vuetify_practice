@@ -1,0 +1,121 @@
+.header_background {
+    background-image: url('@/assets/pic/homePage-background.png');
+    background-size: cover;
+  }
+  .header_describe {
+    background-color: rgba(183,164,139,0.4);
+  }
+  
+  .aboutPicBg {
+    height: 350px;
+    background-color: #B7A48B;
+  }
+  .aboutPic {
+    top: 10%;
+    left: -5%;
+  }
+  .title_english{
+    color: rgba(255, 255, 255, 0.15);
+  }
+  .title_primary{
+    position: relative;
+    padding-top: 70px;
+    padding-bottom: 40px;
+  }
+  
+  .title_primary .title:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    min-width: 250px;
+    height: 1px;
+    background-color: #fff;
+  }
+  
+  .bg_video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    min-width: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+  .bg_video_content {
+    height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+  }
+  .discount_title {
+    background-color: rgba(0, 0, 0, 0.65);
+  }
+  .copyCoupon {
+    z-index: -3;
+  }
+  
+  .products-img {
+    height: 350px;
+    width: 298px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .bi.bi-heart-fill, .bi.bi-heart {
+    cursor: pointer;
+  }
+ section .swiper {
+    padding: 36px;
+}
+  .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: -3px;
+  }
+  .popular_span {
+    top: 35%;
+    right: 28%;
+  }
+  
+  .shopping-btn {
+      position: relative;
+      padding: 18px 22px;
+      letter-spacing: 4px;
+      z-index: 5;
+      transition: all .3s cubic-bezier(.68,-.55,.265,1.55);
+  }
+  .shopping-btn:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background:#CCB69A;
+      width: 56px;
+      height: 56px;
+      z-index: -5;
+      transition: all .5s cubic-bezier(.68,-.55,.265,1.55)
+  }
+  
+  .shopping-btn:hover:before {
+      width: 100%;
+      background: #CCB69A;
+  }
+  .card-img-home {
+      cursor: pointer;
+      overflow: hidden;
+      height: 300px;
+  }
+  .cardProduct-home img {
+      transition-duration: 0.5s;
+      filter: brightness(0.6);
+  }
+  .cardProduct-home img:hover {
+      width: 110%;
+      filter: brightness(1);
+  }
+  
+  @media (min-width: 641px) {
+      .card-img-home {
+          height: 310px;
+      }
+  }

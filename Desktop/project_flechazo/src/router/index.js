@@ -106,10 +106,6 @@ const routes = [
       {
         path: 'orders',
         component: () => import('../views/dashboard/AdminOrder.vue')
-      },
-      {
-        path: 'blog',
-        component: () => import('../views/dashboard/AdminBlog.vue')
       }
     ]
   },

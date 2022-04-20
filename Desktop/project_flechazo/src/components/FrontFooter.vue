@@ -1,5 +1,5 @@
 <template>
-     <footer class="footer">
+     <footer class="p-6 bg-info">
       <div class="container">
         <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5 d-flex justify-content-center">
            <li class="col border-bottom  border-bottom-md-0 pb-md-0">
@@ -15,7 +15,7 @@
             <p>聯繫我們有專人為您服務</p>
           </li>
         </ul>
-        <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-4 footer_contact">
+        <ul class="row row-cols-1 row-cols-sm-2 row-cols-md-4 mb-7">
           <li class="col- pb-md-0 mb-1">
             <a href="#/about" class="h5 me-4">關於品牌</a>
           </li>
@@ -46,21 +46,11 @@
         </ul>
       </div>
     </footer>
-    <div class="text-center text-xs text-light small copyright">
-      <p>Copyright @flechazo All Rights Reserved. Designed by AnnaWen</p>
+    <div class="d-flex justify-content-center text-xs text-light small bg-info p-1">
+      <p>Copyright @flechazo All Rights Reserved. Designed by AnnaWen
+      </p>
+      <router-link to="/login">
+          <i class="bi bi-gear-fill ms-2"></i>
+      </router-link>
     </div>
 </template>
-<style lang="scss">
-.footer {
-  background-color: #B7A48B;
-  padding: 80px;
-}
-
-.copyright {
-  padding: 1px;
-  background-color: #B7A48B;
-}
-.footer_contact {
-  margin-bottom: 90px;
-}
-</style>

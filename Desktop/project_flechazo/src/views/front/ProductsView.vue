@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-9">
                 <div class="row gx-3">
-                    <div class="col-md-6 col-lg-4 mb-3" v-for="product in filterCategories" :key="product.id">
+                    <div class="col-md-6 col-lg-4 mb-3 wow fadeInUp" data-wow-duration="1.5s" v-for="product in filterCategories" :key="product.id">
                       <div class="cardProduct position-relative">
                         <router-link :to="`/product/${product.id}`" class="card-img">
                             <img :src="product.imageUrl" class="card-img-top" :alt="product.title">

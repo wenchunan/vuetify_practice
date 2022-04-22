@@ -7,7 +7,7 @@
           </h1>
       </div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2">
-          <div class="col">
+          <div class="col wow fadeInLeft" data-wow-duration="1.5s">
               <h4>發光並非太陽的專利</h4>
               <h3>你也可以</h3>
               <span><em>最浪漫的不是陪你到老<br>
@@ -18,7 +18,7 @@
               </p>
               <router-link to="/products" class="pb-2 border-bottom">前往商店 &rarr;</router-link>
           </div>
-          <div class="col pb-14 pt-6 pt-md-0">
+          <div class="col pb-14 pt-6 pt-md-0 wow fadeInRight" data-wow-duration="1.5s">
               <div class="about">
                 <img
                 width="350"

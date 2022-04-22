@@ -4,7 +4,7 @@
 </VueLoading>
 <div class="bg-primary">
     <div class="container py-5 overflow-hidden">
-        <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb wow fadeInLeft" data-wow-duration="1.5s">
             <ol class="breadcrumb px-0 mb-0 py-3 pt-6">
                 <li class="breadcrumb-item"><router-link to="/">首頁</router-link></li>
                 <li class="breadcrumb-item"><router-link to="/products">商品</router-link></li>
@@ -12,10 +12,10 @@
             </ol>
         </nav>
         <div class="row pt-2">
-          <div class="col-md-6 col-12">
+          <div class="col-md-6 col-12  wow fadeInLeft" data-wow-duration="1.5s">
               <img :src="product.imageUrl" alt="" class="productSize img-fluid">
           </div>
-            <div class="col-md-6 col-12 pt-md-0 pt-5">
+            <div class="col-md-6 col-12 pt-md-0 pt-5  wow fadeInRight" data-wow-duration="1.5s">
                 <h1 class="fw-bold mb-1">{{ product.title }}</h1>
                 <span class="d-block pb-5 text-light">{{ product.category }}</span>
                 <p class="pb-4">{{ product.description }}</p>
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <div class="pb-5 pt-5">
+        <div class="pb-5 pt-5  wow fadeInUp" data-wow-duration="1.5s" data-wow-delay="1s">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">購買須知</button>

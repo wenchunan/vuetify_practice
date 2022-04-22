@@ -6,6 +6,9 @@ import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
+import Wow from 'wow.js'
+import 'wow.js/css/libs/animate.css'
+
 import {
   defineRule, Form, Field, ErrorMessage, configure
 } from 'vee-validate'
@@ -47,3 +50,4 @@ app.component('VueForm', Form)
 app.component('VueField', Field)
 app.component('ErrorMessage', ErrorMessage)
 app.mount('#app')
+new Wow().init()

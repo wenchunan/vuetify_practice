@@ -88,9 +88,9 @@ export default {
     })
     // 初始化先取得 localStorage 的數量
     if (JSON.parse(localStorage.getItem('favorite'))) {
-      this.favoriteQty = JSON.parse(localStorage.getItem('favorite')).length
+      this.favorite = JSON.parse(localStorage.getItem('favorite')).length
     } else {
-      this.favoriteQty = 0
+      this.favorite = 0
     }
     // 跨元件監聽收藏事件
     emitter.on('get-favorite', (favoriteData) => {

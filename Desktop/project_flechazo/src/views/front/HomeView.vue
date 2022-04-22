@@ -8,7 +8,7 @@
                   <div class="header_pic col-12 col-lg">
                       <img src="@/assets/pic/homePagePic.png"  class="img-fluid" alt="homePagePic">
                   </div>
-                  <div class="col-12 col-lg header_describe p-5">
+                  <div class="col-12 col-lg header_describe p-5 ">
                       <h4>我在想</h4>
                       <h3>你戴上會是什麼樣子</h3>
                       <ul class="pt-4">
@@ -25,14 +25,15 @@
               </div>
               <div class="container">
                   <div class="row">
-                      <div class="py-5 col-12 col-md-6">
+                      <div class="py-5 col-12 col-md-6 wow fadeInLeft" data-wow-duration="3s"
+                      >
                           <h4>發光並非太陽的專利</h4>
                           <h3>你也可以</h3>
                           <span><em>最浪漫的不是陪你到老<br>
                           而是助你悄悄變美  精緻到老</em></span>
                           <p class="pt-5 pe-md-6 pe-5">我們的目標是打造一個女性化、永恆、優雅、現代與復古的飾品品牌，在平凡的生活中點綴一些不平凡，讓女孩們在每個舉手投足間，都是那最美的風景。</p>
                       </div>
-                      <div class="col-12 col-md-6 mb-8 pt-4 aboutPicBg position-relative">
+                      <div class="col-12 col-md-6 mb-8 pt-4 aboutPicBg position-relative wow fadeInRight" data-wow-duration="3s">
                           <img src="@/assets/pic/AboutPic.png" class="aboutPic position-absolute img-fluid" alt="關於品牌圖片" width="500">
                       </div>
                   </div>
@@ -45,7 +46,7 @@
                 </video>
             </div>
             <div class="discount_title py-10">
-                <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="d-flex flex-column align-items-center justify-content-center wow fadeInUp" data-wow-duration="3s">
                     <h2 class="title_english fst-italic ps-10 mb-0">Celebrate</h2>
                     <h1 class="fs-2 fw-bold px-1 mb-4">歡慶周年</h1>
                     <p class="text-center text-md-start mb-5 mb-md-5 px-5">
@@ -106,7 +107,7 @@
                 <div class="container mt-5 mb-md-0">
                     <div class="row row-cols-md-2 row-cols-lg-2 gx-2">
                       <div class="col-lg-6 col-md-12 col-12 pb-5">
-                        <div class="popular_left d-lg-flex d-md-flex">
+                        <div class="popular_left d-lg-flex d-md-flex wow fadeInLeft" data-wow-delay="0.2s" data-wow-duration="1.5s">
                           <img src="@/assets/pic/popularPic1-1.png" alt="莫奈花園的琥珀鎖住了春天" class="img-fluid">
                           <span class="bg-secondary d-block p-3 d-lg-none d-md-none text-center">莫奈花園的琥珀鎖住了春天</span>
                           <div class="position-relative">
@@ -116,7 +117,7 @@
                         </div>
                       </div>
                       <div class="col-lg-6  col-md-12 col-12 pt-md-10 ">
-                        <div class="d-lg-flex d-md-flex">
+                        <div class="d-lg-flex d-md-flex wow fadeInRight" data-wow-delay="0.2s" data-wow-duration="1.5s">
                             <img src="@/assets/pic/popularPic2-1.png" alt="你無處安放的優雅" class="img-fluid">
                             <span class="bg-secondary p-3 d-block d-lg-none d-md-none text-center">你無處安放的優雅</span>
                             <div class="position-relative">
@@ -139,90 +140,48 @@
                   <h1 class="title fs-2 fw-bold">商品專區</h1>
                 </div>
                 <div class="container pt-5">
-                  <!-- <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 gx-0 text-center">
-                    <div class="col">
-                      <a href="" @click.prevent="goToCategory('戒指')" class="position-relative productItem">
-                          <div class="imgFilter">
-                            <img src="@/assets/pic/productsRing.png" class="img-fluid" width="650" alt="戒指專區">
+                    <div class="row px-3 wow fadeInUp" data-wow-duration="2.5s">
+                        <div class="col-lg-3 col-md-6 p-0">
+                          <div class="cardProduct-home position-relative">
+                              <a @click.prevent="goToCategory('戒指')" class="card-img-home rounded-0 d-block">
+                                  <img src="@/assets/pic/productsRing.png" class="card-img-top rounded-0" alt="戒指專區">
+                              </a>
+                              <div class="position-absolute top-50 start-50 text-light translate-middle">
+                                  <h4>戒指 Ring</h4>
+                              </div>
                           </div>
-                          <div class="productItem-text">
-                            <h4>戒指 Ring</h4>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-0">
+                          <div class="cardProduct-home position-relative">
+                              <a @click.prevent="goToCategory('手鍊')" class="card-img-home rounded-0 d-block">
+                                  <img src="@/assets/pic/productsBracelet.png" class="card-img-top rounded-0" alt="手鍊專區">
+                              </a>
+                              <div class="position-absolute top-50 start-50 text-light translate-middle">
+                                  <h4>手鍊 Bracelet</h4>
+                              </div>
                           </div>
-                      </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-0">
+                          <div class="cardProduct-home position-relative">
+                              <a @click.prevent="goToCategory('項鍊')" class="card-img-home rounded-0 d-block">
+                                  <img src="@/assets/pic/productsNecklace.png" class="card-img-top rounded-0" alt="項鍊專區">
+                              </a>
+                              <div class="position-absolute top-50 start-50 text-light translate-middle">
+                                  <h4>項鍊 Necklace</h4>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 p-0">
+                          <div class="cardProduct-home position-relative">
+                              <a @click.prevent="goToCategory('耳環')" class="card-img-home rounded-0 d-block">
+                                  <img src="@/assets/pic/productsEarrings.png" class="card-img-top rounded-0" alt="耳環專區">
+                              </a>
+                              <div class="position-absolute top-50 start-50 text-light translate-middle">
+                                  <h4>耳環 Earrings</h4>
+                              </div>
+                          </div>
+                        </div>
                     </div>
-                    <div class="col">
-                      <a href="" @click.prevent="goToCategory('手鍊')"  class="mb-5 position-relative productItem">
-                        <div class="imgFilter">
-                            <img src="@/assets/pic/productsBracelet.png" class="img-fluid" width="650" alt="手鍊專區">
-                          </div>
-                          <div class="productItem-text">
-                            <h4>手鍊 Bracelet</h4>
-                          </div>
-                      </a>
-                    </div>
-                    <div class="col">
-                      <a href="" @click.prevent="goToCategory('項鍊')" class="position-relative productItem">
-                          <div class="imgFilter">
-                            <img src="@/assets/pic/productsNecklace.png" class="img-fluid" width="650" alt="項鍊專區">
-                          </div>
-                          <div class="productItem-text">
-                            <h4>項鍊 Necklace</h4>
-                          </div>
-                      </a>
-                    </div>
-                    <div class="col">
-                      <a href="" @click.prevent="goToCategory('耳環')" class="mb-5 position-relative productItem">
-                        <div class="imgFilter">
-                            <img src="@/assets/pic/productsEarrings.png" class="img-fluid" width="650" alt="耳環專區">
-                          </div>
-                          <div class="productItem-text">
-                            <h4>耳環 Earrings</h4>
-                          </div>
-                      </a>
-                    </div>
-                  </div> -->
-                      <div class="row px-3">
-                          <div class="col-lg-3 col-md-6 p-0">
-                            <div class="cardProduct-home position-relative">
-                                <a @click.prevent="goToCategory('戒指')" class="card-img-home rounded-0 d-block">
-                                    <img src="@/assets/pic/productsRing.png" class="card-img-top rounded-0" alt="戒指專區">
-                                </a>
-                                <div class="position-absolute top-50 start-50 text-light translate-middle">
-                                    <h4>戒指 Ring</h4>
-                                </div>
-                            </div>
-                          </div>
-                           <div class="col-lg-3 col-md-6 p-0">
-                            <div class="cardProduct-home position-relative">
-                                <a @click.prevent="goToCategory('手鍊')" class="card-img-home rounded-0 d-block">
-                                    <img src="@/assets/pic/productsBracelet.png" class="card-img-top rounded-0" alt="手鍊專區">
-                                </a>
-                                <div class="position-absolute top-50 start-50 text-light translate-middle">
-                                    <h4>手鍊 Bracelet</h4>
-                                </div>
-                            </div>
-                          </div>
-                           <div class="col-lg-3 col-md-6 p-0">
-                            <div class="cardProduct-home position-relative">
-                                <a @click.prevent="goToCategory('項鍊')" class="card-img-home rounded-0 d-block">
-                                    <img src="@/assets/pic/productsNecklace.png" class="card-img-top rounded-0" alt="項鍊專區">
-                                </a>
-                                <div class="position-absolute top-50 start-50 text-light translate-middle">
-                                    <h4>項鍊 Necklace</h4>
-                                </div>
-                            </div>
-                          </div>
-                           <div class="col-lg-3 col-md-6 p-0">
-                            <div class="cardProduct-home position-relative">
-                                <a @click.prevent="goToCategory('耳環')" class="card-img-home rounded-0 d-block">
-                                    <img src="@/assets/pic/productsEarrings.png" class="card-img-top rounded-0" alt="耳環專區">
-                                </a>
-                                <div class="position-absolute top-50 start-50 text-light translate-middle">
-                                    <h4>耳環 Earrings</h4>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
                 </div>
               </section>
         </section>

@@ -2,7 +2,7 @@
 <VueLoading :active="isLoading">
   <img src="@/assets/pic/loading.svg" alt="loadingSvg">
 </VueLoading>
-<div class="bg-primary pb-12">
+<div class="bg-primary pb-12 shadow-cart-bg">
     <div class="container pt-6 pb-0">
         <OrderNav :orderId="order"></OrderNav>
     </div>

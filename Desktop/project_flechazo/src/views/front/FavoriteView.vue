@@ -1,5 +1,5 @@
 <template>
-<div class="py-5 py-md-7 bg-primary">
+<div class="py-5 py-md-7 bg-primary shadow-bg">
     <div class="container overflow-hidden" :class="favoriteId.length > 0 ? 'vh-auto' : 'vh-70'">
         <h1 class="fw-bold pt-6 mb-3 fs-4 col-12 col-lg-7 mb-md-5 mx-auto">我的最愛</h1>
       <!-- 收藏夾為空 -->

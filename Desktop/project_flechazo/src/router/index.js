@@ -97,15 +97,24 @@ const routes = [
     children: [
       {
         path: 'products',
-        component: () => import('../views/dashboard/AdminProducts.vue')
+        component: () => import('../views/dashboard/AdminProducts.vue'),
+        meta: {
+          title: '後台 - 新增/編輯產品'
+        }
       },
       {
         path: 'coupon',
-        component: () => import('../views/dashboard/AdminCoupon.vue')
+        component: () => import('../views/dashboard/AdminCoupon.vue'),
+        meta: {
+          title: '後台 - 新增/編輯優惠券'
+        }
       },
       {
         path: 'orders',
-        component: () => import('../views/dashboard/AdminOrder.vue')
+        component: () => import('../views/dashboard/AdminOrder.vue'),
+        meta: {
+          title: '後台 - 訂單管理'
+        }
       }
     ]
   },

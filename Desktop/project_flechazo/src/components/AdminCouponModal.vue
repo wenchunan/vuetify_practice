@@ -27,7 +27,7 @@
                   <input type="text" id="coupon_code" class="form-control" placeholder="請輸入優惠碼" v-model="tempCoupon.code">
                 </div>
                 <div class="mb-3 text-dark">
-                    <label for="due_date">到期日</label>
+                    <label for="due_date" class="form-label text-dark">到期日</label>
                     <input type="date" class="form-control" id="due_date"
                         v-model="due_date">
                 </div>
@@ -86,7 +86,7 @@ export default {
       this.tempCoupon = JSON.parse(JSON.stringify(this.coupon))
       const dateAndTime = new Date(this.tempCoupon.due_date * 1000)
         .toISOString().split('T')
-      this.due_date = dateAndTime
+      this.due_date = dateAndTime[0]
     },
     due_date () {
       this.tempCoupon.due_date = Math.floor(new Date(this.due_date) / 1000)

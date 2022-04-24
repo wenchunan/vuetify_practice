@@ -2,7 +2,7 @@
 <VueLoading :active="isLoading">
   <img src="@/assets/pic/loading.svg" alt="loadingSvg">
 </VueLoading>
-<div class="bg-primary pb-12">
+<div class="bg-primary pb-12 shadow-bg">
     <div class="container py-5 overflow-hidden">
         <h1 class="fw-bold pt-md-7 pt-6 mb-3 fs-4">購物車</h1>
         <div class="row gx-6">
